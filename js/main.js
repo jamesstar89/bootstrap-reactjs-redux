@@ -1,6 +1,40 @@
 // main.js
 var React = require('react');
 var ReactDOM = require('react-dom');
+var ReactRedux = require('react-redux').connect;
+var Redux = require('redux').createStore;
+let store = Redux(themeApp);
+
+// actions
+var SET_THEME = 'SET_THEME';
+var DAY = 'DAY';
+var NIGHT = 'NIGHT';
+
+function setTheme(theme) {
+  return { type: SET_THEME, theme }
+}
+
+// reducers
+function themeApp(state, action) {
+  switch (action.type) {
+    case SET_THEME:
+      return Object.assign({}, state, {
+        theme: action.theme
+      })
+    default:
+      return state
+  }
+}
+
+function onThemeToggle(event) {
+	var checked = event.target.attributes[0].ownerElement.checked;
+	if(checked) {
+		store.dispatch(setTheme(DAY));
+	} else {
+		store.dispatch(setTheme(NIGHT));
+	}
+	console.log(store.getState());
+}
 
 var PostApp = React.createClass({
   render: function() {
@@ -25,7 +59,7 @@ var PostApp = React.createClass({
 var ToggleTheme = React.createClass({
   render: function() {
     return (
-		<span><input type='checkbox' /> Check for day theme</span>
+		<span><input type='checkbox' onClick={onThemeToggle} /> Check for day theme</span>
     );
   }
 });
