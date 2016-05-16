@@ -5,10 +5,12 @@ var ReactRedux = require('react-redux').connect;
 var Redux = require('redux').createStore;
 let store = Redux(themeApp);
 
-// actions
-var SET_THEME = 'SET_THEME';
-var DAY = 'DAY';
-var NIGHT = 'NIGHT';
+// action types
+const SET_THEME = 'SET_THEME';
+
+// other constants
+const DAY = 'DAY';
+const NIGHT = 'NIGHT';
 
 function setTheme(theme) {
   return { type: SET_THEME, theme }
