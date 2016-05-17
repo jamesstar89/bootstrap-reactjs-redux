@@ -20965,193 +20965,218 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var ReactRedux = require('react-redux').connect;
 var Redux = require('redux').createStore;
+
+// action types
+const SET_THEME = 'SET_THEME';
+
+// other constants
+const DAY = 'DAY';
+const NIGHT = 'NIGHT';
+
+const initialState = {
+	theme: NIGHT
+};
+
 let store = Redux(themeApp);
 
-// actions
-var SET_THEME = 'SET_THEME';
-var DAY = 'DAY';
-var NIGHT = 'NIGHT';
-
 function setTheme(theme) {
-		return { type: SET_THEME, theme };
+	return { type: SET_THEME, theme };
 }
 
 // reducers
 function themeApp(state, action) {
-		switch (action.type) {
-				case SET_THEME:
-						return Object.assign({}, state, {
-								theme: action.theme
-						});
-				default:
-						return state;
-		}
+	if (state === undefined) {
+		state = initialState;
+	}
+	switch (action.type) {
+		case SET_THEME:
+			return Object.assign({}, state, {
+				theme: action.theme
+			});
+		default:
+			return state;
+	}
 }
 
 function onThemeToggle(event) {
-		var checked = event.target.attributes[0].ownerElement.checked;
-		if (checked) {
-				store.dispatch(setTheme(DAY));
-		} else {
-				store.dispatch(setTheme(NIGHT));
-		}
-		console.log(store.getState());
+	var checked = event.target.attributes[0].ownerElement.checked;
+	if (checked) {
+		store.dispatch(setTheme(DAY));
+	} else {
+		store.dispatch(setTheme(NIGHT));
+	}
+	App.setState({ theme: store.getState().theme });
 }
 
 var PostApp = React.createClass({
-		displayName: 'PostApp',
+	displayName: 'PostApp',
 
-		render: function () {
-				return React.createElement(
-						'div',
-						{ className: 'container-fluid' },
-						React.createElement(
-								'nav',
-								{ className: 'navbar navbar-dark bg-inverse' },
-								React.createElement(
-										'a',
-										{ className: 'navbar-brand', href: '/' },
-										'Puff Stream'
-								)
-						),
-						React.createElement(
-								'section',
-								{ className: 'column-one' },
-								React.createElement(
-										'div',
-										{ className: 'inner-column-one' },
-										React.createElement(ToggleTheme, null),
-										React.createElement(PhotoWithText, null),
-										React.createElement(PhotoGrid2x2, null),
-										React.createElement(PhotoFull, null)
-								)
-						)
-				);
+	getInitialState: function () {
+		return { theme: store.getState().theme };
+	},
+	render: function () {
+		var theme;
+		if (this.state.theme === 'NIGHT') {
+			theme = 'container-fluid night theme';
+		} else {
+			theme = 'container-fluid day theme';
 		}
+		return React.createElement(
+			'div',
+			{ className: theme },
+			React.createElement(
+				'nav',
+				{ className: 'navbar navbar-dark bg-inverse' },
+				React.createElement(
+					'a',
+					{ className: 'navbar-brand', href: '/' },
+					'Puff Stream'
+				)
+			),
+			React.createElement(
+				'section',
+				{ className: 'column-one' },
+				React.createElement(
+					'div',
+					{ className: 'inner-column-one' },
+					React.createElement(
+						'p',
+						null,
+						'Current theme: ',
+						this.state.theme
+					),
+					React.createElement(ToggleTheme, { key: 1 }),
+					React.createElement(PhotoWithText, { key: 2 }),
+					React.createElement(PhotoGrid2x2, { key: 3 }),
+					React.createElement(PhotoFull, { key: 4 })
+				)
+			)
+		);
+	}
 });
 
 var ToggleTheme = React.createClass({
-		displayName: 'ToggleTheme',
+	displayName: 'ToggleTheme',
 
-		render: function () {
-				return React.createElement(
-						'span',
-						null,
-						React.createElement('input', { type: 'checkbox', onClick: onThemeToggle }),
-						' Check for day theme'
-				);
-		}
+	render: function () {
+		return React.createElement(
+			'span',
+			null,
+			React.createElement('input', { type: 'checkbox', onClick: onThemeToggle }),
+			' Check for day theme'
+		);
+	}
 });
 
 var PhotoWithText = React.createClass({
-		displayName: 'PhotoWithText',
+	displayName: 'PhotoWithText',
 
-		render: function () {
-				return React.createElement(
-						'div',
-						null,
-						React.createElement(
-								'h1',
-								null,
-								'What is Lorem Lpsum?'
-						),
-						React.createElement(
-								'div',
-								null,
-								React.createElement('img', { src: 'images/building.png' })
-						),
-						React.createElement(
-								'div',
-								{ className: 'post-by clearfix' },
-								React.createElement(
-										'span',
-										null,
-										'Post by James Star'
-								)
-						)
-				);
-		}
+	render: function () {
+		return React.createElement(
+			'div',
+			null,
+			React.createElement(
+				'h1',
+				null,
+				'What is Lorem Lpsum?'
+			),
+			React.createElement(
+				'div',
+				null,
+				React.createElement('img', { src: 'images/building.png' })
+			),
+			React.createElement(
+				'div',
+				{ className: 'post-by clearfix' },
+				React.createElement(
+					'span',
+					null,
+					'Post by James Star'
+				)
+			)
+		);
+	}
 });
 
 var PhotoGrid2x2 = React.createClass({
-		displayName: 'PhotoGrid2x2',
+	displayName: 'PhotoGrid2x2',
 
-		render: function () {
-				return React.createElement(
-						'div',
-						null,
-						React.createElement(
-								'h1',
-								null,
-								'What is Lorem Lpsum?'
-						),
-						React.createElement(
-								'div',
-								null,
-								React.createElement(
-										'div',
-										{ className: 'col-xs-6 grid-box-1' },
-										React.createElement('img', { src: 'images/building.png' })
-								),
-								React.createElement(
-										'div',
-										{ className: 'col-xs-6 grid-box-2' },
-										React.createElement('img', { src: 'images/building.png' })
-								),
-								React.createElement(
-										'div',
-										{ className: 'col-xs-6 grid-box-3' },
-										React.createElement('img', { src: 'images/building.png' })
-								),
-								React.createElement(
-										'div',
-										{ className: 'col-xs-6 grid-box-4' },
-										React.createElement('img', { src: 'images/building.png' })
-								)
-						),
-						React.createElement(
-								'div',
-								{ className: 'post-by clearfix' },
-								React.createElement(
-										'span',
-										null,
-										'Post by James Star'
-								)
-						)
-				);
-		}
+	render: function () {
+		return React.createElement(
+			'div',
+			null,
+			React.createElement(
+				'h1',
+				null,
+				'What is Lorem Lpsum?'
+			),
+			React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'div',
+					{ className: 'col-xs-6 grid-box-1' },
+					React.createElement('img', { src: 'images/building.png' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'col-xs-6 grid-box-2' },
+					React.createElement('img', { src: 'images/building.png' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'col-xs-6 grid-box-3' },
+					React.createElement('img', { src: 'images/building.png' })
+				),
+				React.createElement(
+					'div',
+					{ className: 'col-xs-6 grid-box-4' },
+					React.createElement('img', { src: 'images/building.png' })
+				)
+			),
+			React.createElement(
+				'div',
+				{ className: 'post-by clearfix' },
+				React.createElement(
+					'span',
+					null,
+					'Post by James Star'
+				)
+			)
+		);
+	}
 });
 
 var PhotoFull = React.createClass({
-		displayName: 'PhotoFull',
+	displayName: 'PhotoFull',
 
-		render: function () {
-				return React.createElement(
-						'div',
-						null,
-						React.createElement(
-								'h1',
-								null,
-								'What is Lorem Lpsum?'
-						),
-						React.createElement(
-								'div',
-								null,
-								React.createElement('img', { src: 'images/building.png' })
-						),
-						React.createElement(
-								'div',
-								{ className: 'post-by clearfix' },
-								React.createElement(
-										'span',
-										null,
-										'Post by James Star'
-								)
-						)
-				);
-		}
+	render: function () {
+		return React.createElement(
+			'div',
+			null,
+			React.createElement(
+				'h1',
+				null,
+				'What is Lorem Lpsum?'
+			),
+			React.createElement(
+				'div',
+				null,
+				React.createElement('img', { src: 'images/building.png' })
+			),
+			React.createElement(
+				'div',
+				{ className: 'post-by clearfix' },
+				React.createElement(
+					'span',
+					null,
+					'Post by James Star'
+				)
+			)
+		);
+	}
 });
 
-ReactDOM.render(React.createElement(PostApp, null), document.getElementById('postApp'));
+var App = ReactDOM.render(React.createElement(PostApp, null), document.getElementById('postApp'));
 
 },{"react":179,"react-dom":30,"react-redux":33,"redux":185}]},{},[194]);
