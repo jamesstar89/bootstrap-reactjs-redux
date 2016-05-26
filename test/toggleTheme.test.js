@@ -13,7 +13,7 @@ describe('toggleTheme', function() {
 		assert(theme === 'NIGHT');
 	})
 
-	it('should change theme to DAY on default value', function() {
+	it('should change theme to NIGHT on default value', function() {
 		var theme = onThemeToggle();
 		assert(theme === 'NIGHT');
 	})
