@@ -1,2 +1,1 @@
-// main.js
-require('./coms/postApp.jsx');
+import "./coms/postApp.jsx";

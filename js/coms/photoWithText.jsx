@@ -1,7 +1,7 @@
-var React = require('react');
+import React, { Component } from 'react';
 
-var PhotoWithText = React.createClass({
-  render: function() {
+export default class PhotoWithText extends Component {
+  render() {
     return (
     	<div>
 			<h1>What is Lorem Lpsum?</h1>
@@ -12,6 +12,4 @@ var PhotoWithText = React.createClass({
 		</div>
     );
   }
-});
-
-module.exports = PhotoWithText
+}

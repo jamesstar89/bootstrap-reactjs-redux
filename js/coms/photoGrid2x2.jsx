@@ -1,7 +1,7 @@
-var React = require('react');
+import React, { Component } from 'react';
 
-var PhotoGrid2x2 = React.createClass({
-  render: function() {
+export default class PhotoGrid2x2 extends Component {
+  render() {
     return (
     	<div>
 			<h1>What is Lorem Lpsum?</h1>
@@ -25,6 +25,4 @@ var PhotoGrid2x2 = React.createClass({
 		</div>
     );
   }
-});
-
-module.exports = PhotoGrid2x2
+}

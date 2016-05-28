@@ -1,7 +1,7 @@
-var React = require('react');
+import React, { Component } from 'react';
 
-var PhotoFull = React.createClass({
-  render: function() {
+export default class PhotoFull extends Component {
+  render() {
     return (
     	<div>
 			<h1>What is Lorem Lpsum?</h1>
@@ -12,6 +12,4 @@ var PhotoFull = React.createClass({
 		</div>
     );
   }
-});
-
-module.exports = PhotoFull
+}

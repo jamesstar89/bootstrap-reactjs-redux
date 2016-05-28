@@ -1,5 +1,7 @@
+import App from './coms/postApp.jsx'
+
 var getApp = () => {
-	return require('./coms/postApp.jsx');
+	return App;
 }
 
 var setTheme = (newTheme) => {
@@ -22,4 +24,4 @@ var utilities = {
 	hasDocument: hasDocument
 }
 
-module.exports = utilities;
+export default utilities;

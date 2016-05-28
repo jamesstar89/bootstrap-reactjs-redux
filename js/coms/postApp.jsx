@@ -1,58 +1,56 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var Redux = require('redux').createStore;
-var Actions = require('../actions');
-var ToggleTheme = require('./toggleTheme.jsx');
-var PhotoWithText = require('./photoWithText.jsx');
-var PhotoGrid2x2 = require('./photoGrid2x2.jsx');
-var PhotoFull = require('./photoFull.jsx');
+import React, { Component } from 'react';
+import { render } from "react-dom";
+import { createStore } from 'redux';
+import Actions from '../actions';
+import ToggleTheme from './toggleTheme.jsx';
+import PhotoWithText from './photoWithText.jsx';
+import PhotoGrid2x2 from './photoGrid2x2.jsx';
+import PhotoFull from './photoFull.jsx';
 
 // method call
-var themeApp = require('../reducers');
+import themeApp from '../reducers';
 
-let store = Redux(themeApp);
+let store = createStore(themeApp);
 
 var App = false;
 
-var PostApp = React.createClass({
-  getInitialState: function() {
-    return {theme: store.getState().theme};
-  },
-  render: function() {
-  	var theme;
-  	if(this.state.theme === Actions.NIGHT) {
-  		theme = 'container-fluid night theme'
-  	} else {
-  		theme = 'container-fluid day theme'
-  	}
+const postApp = document.getElementById("postApp");
+
+export default class PostApp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { theme: store.getState().theme };
+  }
+
+  render() {
+    var theme = this.state;
+
+    if(this.state.theme === Actions.NIGHT) {
+      theme = 'container-fluid night theme'
+    } else {
+      theme = 'container-fluid day theme'
+    }
+
     return (
-    <div className={theme}>
-		<nav className='navbar navbar-dark bg-inverse'>
-		  <a className='navbar-brand' href='/'>Puff Stream</a>
-		</nav>
-		<section className='column-one'>
-			<div className='inner-column-one'>
-		    	<p>Current theme: {this.state.theme}</p>
-				<ToggleTheme key={1} />
-				<PhotoWithText key={2} />
-				<PhotoGrid2x2 key={3} />
-				<PhotoFull key={4} />
-			</div>
-		</section>
-	</div>
+      <div className={theme}>
+      <nav className='navbar navbar-dark bg-inverse'>
+        <a className='navbar-brand' href='/'>Puff Stream</a>
+      </nav>
+      <section className='column-one'>
+        <div className='inner-column-one'>
+            <p>Current theme: {this.state.theme}</p>
+            <ToggleTheme key={1} />
+            <PhotoWithText key={2} />
+            <PhotoGrid2x2 key={3} />
+            <PhotoFull key={4} />
+        </div>
+      </section>
+    </div>
     );
   }
-});
+}
 
-var init = () => {
-  if(!App) {
-    App = ReactDOM.render(
-      <PostApp />,
-      document.getElementById('postApp')
-    );
-  }
-};
-
-init();
-
-module.exports = App
+export default App = render(
+  <PostApp/>,
+  postApp
+);

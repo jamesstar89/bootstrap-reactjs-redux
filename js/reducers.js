@@ -1,4 +1,4 @@
-var Actions = require('./actions')
+import Actions from './actions';
 
 const initialState = {
   theme: Actions.NIGHT
@@ -19,4 +19,4 @@ var themeApp = (state, action) => {
 	}
 }
 
-module.exports = themeApp
+export default themeApp

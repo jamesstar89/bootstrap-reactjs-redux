@@ -1,14 +1,12 @@
-var React = require('react');
+import React, { Component } from 'react';
 
 // method call
-var onThemeToggle = require('../toggleTheme');
+import onThemeToggle from '../toggleTheme';
 
-var ToggleTheme = React.createClass({
-  render: function() {
+export default class ToggleTheme extends Component {
+  render() {
     return (
 		<span><input type='checkbox' className='toggleThemeCheckbox' onClick={onThemeToggle} /> Check for day theme</span>
     );
   }
-});
-
-module.exports = ToggleTheme
+}

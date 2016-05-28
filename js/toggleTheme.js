@@ -1,12 +1,12 @@
-var Redux = require('redux').createStore;
-var Actions = require('./actions');
+import { createStore } from 'redux';
+import Actions from './actions';
 
 // method calls
-var utilities = require('./utilities');
+import utilities from './utilities';
 
-var themeApp = require('./reducers');
+import themeApp from './reducers';
 
-let store = Redux(themeApp);
+let store = createStore(themeApp);
 
 var onThemeToggle = (bool = false) => {
 	var checked = bool;
@@ -25,4 +25,4 @@ var onThemeToggle = (bool = false) => {
 	return newTheme;
 }
 
-module.exports = onThemeToggle;
+export default onThemeToggle;
