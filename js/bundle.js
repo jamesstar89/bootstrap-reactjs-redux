@@ -109,8 +109,6 @@
 
 	var postApp = document.getElementById("postApp");
 
-	console.log(("production") === 'production');
-
 	var PostApp = function (_Component) {
 	  _inherits(PostApp, _Component);
 

@@ -1,5 +1,10 @@
 var webpack = require('webpack');
 
+// json stringify
+var jStringify = (val) => {
+  return JSON.stringify(val);
+}
+
 module.exports = {
     entry: './js/main.js',
     output: {
@@ -18,7 +23,8 @@ module.exports = {
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
-          'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+          'NODE_ENV': jStringify(process.env.NODE_ENV) 
+          || jStringify('development')
         }
       })
     ]
